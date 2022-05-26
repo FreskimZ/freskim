@@ -1,0 +1,82 @@
+ls:
+  .js: regex:$never - Use Typescript (.ts) instead
+  .jsx:  regex:$never - Use Typescript (.tsx) instead
+  .d.tsx: regex:$never - Use (.d.ts) instead
+  .d.ts: regex:$never - Put .d.ts files inside a /types folder
+  .tsx: regex:$never - Put it inside a /components/* or /pages directory
+  .ts: regex:$never - Move it inside a /helpers folder
+
+  # All subdirectories to be PascalCase also that it only stores .jsx files
+  '**/components/*':
+    .dir: PascalCase
+    .ts: regex:$never - If you want to use a helper move it inside the helpers folder
+    .d.ts: regex:$never - If you want to declare a type move it inside the /types folder
+    .tsx: PascalCase | regex:^index$
+    types:
+      .ts: regex:$never - Use (.d.ts) instead
+      .tsx: regex:$never - Move it to the component level
+      .d.ts: camelCase
+    helpers:
+      .ts: PascalCase
+      .tsx: regex:$never - If you want to create a component move it to /components/*/
+
+  # Make it so all .d.ts files live inside /types folder
+  '**/types/*':
+    .dir: PascalCase
+    .ts: regex:$never - Use (.d.ts) instead
+    .tsx: regex:$never - Move it to the component level 
+    .d.ts: camelCase
+    '/*': 
+      .dir: regex:$never - only files can live in types subdirectories
+
+  # Make it so all helpers to be ts files
+  '**/helpers':
+    .ts: regex:$never - No standalone files move it inside a folder
+    .tsx: regex:$never - Move it to components or pages folder
+    '/*':
+      .dir: PascalCase
+      .ts: regex:$never - Move it inside a folder
+      .tsx: regex:$never - Helpers can only be functions
+
+  '**/pages':
+    jsx: kebab-case | regex:^index$
+
+
+ignore:
+  #next project defaults
+  - '**/.eslintrc.json'
+  - '**/index.d.ts'
+  - '**/jest.config.ts'
+  - '**/next-env.d.ts'
+  - '**/next.config.js'
+  - '**/project.json'
+  - '**/tsconfig.json'
+  - '**/tsconfig.spec.json'
+
+  - 'apps/portfolio/index.d.ts'
+  - 'apps/portfolio/next-env.d.ts'
+  - 'apps/portfolio/next.config.js'
+  - 'apps/portfolio/jest.config.ts'
+  - 'apps/portfolio/specs/index.spec.tsx'
+  - 'apps/portfolio-e2e/src/integration/app.spec.ts'
+  - 'apps/portfolio-e2e/src/support/app.po.ts'
+  - 'apps/portfolio-e2e/src/support/commands.ts'
+  - 'apps/portfolio-e2e/src/support/index.ts'
+  - 'jest.config.ts'
+
+  - apps/portfolio/_app.tsx
+
+  - node_modules
+  - '**/node_modules'
+  - dist
+
+  #root
+  - .editorconfig
+  - .eslintrc.json
+  - .gitignore
+  - .ls-lint.yml
+  - .prettierignore
+  - .prettierrc
+  - babel.config.json
+  - jest.config.js
+  - jest.preset.js
